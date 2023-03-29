@@ -45,25 +45,28 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
   if (user) {
+    console.log(user.email);
     const passwordMatch = bcrypt.compareSync(password, user.password);
     if (passwordMatch) {
       Jwt.sign(
-        Jwt.sign(
-          { userId: user._id, username, email },
-          jwtSecret,
-          {},
-          (err, token) => {
-            if (err) throw err;
-            res
-              .cookie("token", token, { sameSite: "none", secure: true })
-              .status(201)
-              .json({
-                id: user._id,
-              });
-          },
-        ),
+        { userId: user._id, username, email: user.email },
+        jwtSecret,
+        {},
+        (err, token) => {
+          if (err) throw err;
+          res
+            .cookie("token", token, { sameSite: "none", secure: true })
+            .status(201)
+            .json({
+              id: user._id,
+            });
+        },
       );
+    } else {
+      res.json({ error: "Invalid Credentials" });
     }
+  } else {
+    res.json({ error: "Invalid Credentials" });
   }
 });
 
@@ -92,8 +95,8 @@ app.post("/register", async (req, res) => {
           });
       },
     );
-  } catch (error) {
-    console.log(res.status(400).json({ error: error.message }));
+  } catch (err) {
+    res.json({ errorCode: err.code, keyValue: err.keyValue });
   }
 });
 

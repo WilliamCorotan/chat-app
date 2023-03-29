@@ -1,6 +1,6 @@
 import axios from "axios";
 import { UserContextProvider } from "./contexts/UserContext";
-import Routes from "./routes/Routes";
+import AllRoutes from "./routes/AllRoutes";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:8000";
@@ -8,7 +8,7 @@ function App() {
 
   return (
     <UserContextProvider>
-      <Routes />
+      <AllRoutes />
     </UserContextProvider>
   );
 }
