@@ -32,6 +32,7 @@ const Register = () => {
         } else {
           setLoggedInUsername(username);
           setId(res.data.id);
+          sessionStorage.setItem("loggedIn", true);
           navigate("/");
         }
       })
