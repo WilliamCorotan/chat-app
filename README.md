@@ -1,4 +1,4 @@
-##Simple Chat Application
+<h1>Simple Chat Application </h1>
 
 1. Clone the repository
 
@@ -43,3 +43,5 @@
 ```bash
   npm run dev
 ```
+
+- Keep this terminal alive for vite's hot module reloading
